@@ -52,7 +52,13 @@ import Modal from './Modal';
 
     handleChangeCity = ev => {
       const {list} = this.state;
-      const updated = Object.assign({}, this.state.selected, {city: ev.target.value});
+      const updated = {
+        ...this.state.selected,          //copy everything from state.selected
+        location: {        //override the location property
+           ...this.state.selected.location,  //copy the everything from selected.location
+           city: ev.target.value  //override selected.location.city
+        }
+      }
       const foundObject = list.find(obj => obj.id === updated.id);
       Object.assign(foundObject.location, updated.location);
       this.setState({ list:list });// further value
