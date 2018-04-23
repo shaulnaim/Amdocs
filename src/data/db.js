@@ -2,7 +2,7 @@ export const jsonResponse = {
   "people": [
     {
       "id": 2,
-      "age": 24,
+      "age": 34,
       "name": "Shaul Naim",
       "location": {
         "address": " 25 Happy st",
@@ -10,7 +10,7 @@ export const jsonResponse = {
         "country": "Israel"
       },
       "representative": "elisheva",
-      "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/pixage/128.jpg"
+      "avatar": "https://scontent.ftlv2-1.fna.fbcdn.net/v/t1.0-9/13614938_607194602787606_2668564267364329125_n.jpg?_nc_cat=0&oh=a5bb3e73c7659e04107a4149a2034888&oe=5B6C5279"
     },
     {
       "id": 3,
@@ -22,7 +22,7 @@ export const jsonResponse = {
         "country": "Israel"
       },
       "representative": "elisheva",
-      "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/amayvs/128.jpg"
+      "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM298ORyVW62VB6HUFoFXRCiHdeyxdQnjFCK0tq4XYnUBud8WfRA"
     },
     {
       "id": 4,
