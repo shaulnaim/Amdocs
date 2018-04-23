@@ -11,7 +11,9 @@ ReactDOM.render(
   <Router>
       <div>
         <Route exact path="/" component={Title} />
-        <Route path="/list" render={(props) => (<List source={jsonResponse}/>) } />
+        <Route path="/list" render={(props) => 
+            (<List source={jsonResponse}/>) }
+        />
       </div>
   </Router>,
   document.getElementById('root')

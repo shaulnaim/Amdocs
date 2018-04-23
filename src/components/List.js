@@ -2,6 +2,7 @@ import React, { Component, StrictMode } from 'react';
 import { Link } from 'react-router-dom';
 import Card from './Card';
 import Modal from './Modal';
+import ModalContent from './ModalContent';
 
 export const ThemeContext = React.createContext();
 class ThemeProvider extends React.Component {
@@ -168,43 +169,13 @@ export class List extends Component {
                     onClose={this.toggleModal}
                     onSave={this.saveCanges}
                   >
-                    <div>
-                      <h4
-                        style={{
-                          backgroundColor: context.state.bgColor,
-                          color: context.state.color,
-                          margin: 0,
-                          padding: 10,
-                          marginBottom: 10
-                        }}
-                      >
-                        Edit Data
-                      </h4>
-                      <div className="edit-field">
-                        <label htmlFor="name">name:</label>
-                        <input
-                          id="name"
-                          onChange={e => this.handleChangeName(e)}
-                          defaultValue={name}
-                        />
-                      </div>
-                      <div className="edit-field">
-                        <label htmlFor="age">age</label>
-                        <input
-                          id="age"
-                          onChange={this.handleChangeAge}
-                          defaultValue={age}
-                        />
-                      </div>
-                      <div className="edit-field">
-                        <label htmlFor="city">city</label>
-                        <input
-                          id="city"
-                          onChange={this.handleChangeCity}
-                          defaultValue={city}
-                        />
-                      </div>
-                    </div>
+                  <ModalContent age={age} 
+                                city={city}   
+                                name={name}
+                                onEnter={this.toggleModal}
+                                onChangeCity={this.handleChangeCity}
+                                onChangeAge={this.handleChangeAge}
+                                onChangeName={this.handleChangeName}/>
                   </Modal>
                 </div>
               </React.Fragment>

@@ -128,7 +128,6 @@ div.card:hover {
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
-  filter: contrast(70%);
   overflow: hidden;
   position: relative;
   background-image: url(https://unsplash.it/800/600?image=82);
