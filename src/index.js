@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Title } from './components/App';
-import List from './components/List'
+import {List} from './components/List'
 import './index.css';
 
 ReactDOM.render(

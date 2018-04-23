@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ThemeContext } from './List';
 
 class Modal extends React.Component {
   render() {
@@ -29,7 +30,10 @@ class Modal extends React.Component {
       maxWidth: 310,
       minHeight: 180,
       margin: '0 auto',
-      padding: 30,
+      padding: 20,
+      border: 4,
+      borderStyle: 'solid',
+      borderColor: 'black',
       zIndex: 999
     };
 
@@ -40,14 +44,23 @@ class Modal extends React.Component {
     };
 
     return (
-      <div className="backdrop" style={backdropStyle}>
-        <div className="modal" style={modalStyle}>
-          {this.props.children}
-          <div className="footer" style={footerStyle}>
-            <button onClick={this.props.onClose}>Close</button>
+      <ThemeContext.Consumer>
+        {context => (
+          <div className="backdrop" style={backdropStyle}>
+            <div
+              className="modal"
+              style={Object.assign({}, modalStyle, 
+                {borderColor: context.state.bgColor}
+              )}
+            >
+              {this.props.children}
+              <div className="footer" style={footerStyle}>
+                <button onClick={this.props.onClose}>Close</button>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        )}
+      </ThemeContext.Consumer>
     );
   }
 }
