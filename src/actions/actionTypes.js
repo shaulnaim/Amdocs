@@ -1,0 +1,8 @@
+export const RECEIVE_CONTACTS = 'RECEIVE_CONTACTS';
+export const GET_CONTACTS = 'GET_CONTACTS';
+export const UPDATE_AGE = 'UPDATE_AGE';
+export const UPDATE_NAME = 'UPDATE_NAME';
+export const UPDATE_CITY = 'UPDATE_CITY';
+export const TOGGLE_MODAL = 'TOGGLE_MODAL';
+export const APPLY_SEARCH = 'APPLY_SEARCH';
+export const UPDATE_SELECTED = 'UPDATE_SELECTED';

@@ -1,18 +1,26 @@
+html,
+body,
+#root {
+  min-height: 100% !important;
+  height: 100%;
+}
+
 body {
   background: #f0f0f0;
   font-size: 17px;
   line-height: 1.4;
   font-family: 'Jaldi', sans-serif;
 }
+
 .search-input {
   position: fixed;
   left: 26rem;
-  width: 400px;
+  width: 500px;
   height: 22px;
   font-size: medium;
 }
 .page-container {
-  max-width: 1100px;
+  max-width: auto;
   margin: 0 auto;
 }
 .cards-container {
@@ -103,16 +111,23 @@ button.back {
   justify-content: flex-end;
   align-items: center;
 }
-.title .button-container,
-.title .title-container {
+.home-page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.home-page .button-container,
+.home-page .title-container {
   justify-content: center;
 }
 div.card:hover {
   background: floralwhite;
-  filter: contrast(70%);
+  filter: contrast(80%);
   cursor: pointer;
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-  transition: 500ms;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  transition: 300ms;
 }
 .edit-field {
   display: flex;

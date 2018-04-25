@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ThemeContext } from './List';
+import { ThemeContext } from './CardsList';
 
 class Modal extends React.Component {
   render() {
@@ -48,13 +48,21 @@ class Modal extends React.Component {
           <div className="backdrop" style={backdropStyle}>
             <div
               className="modal"
-              style={Object.assign({}, modalStyle, 
-                {borderColor: context.state.bgColor}
-              )}
+              style={Object.assign({}, modalStyle, {
+                borderColor: context.state.bgColor
+              })}
             >
               {this.props.children}
               <div className="footer" style={footerStyle}>
-                <button onClick={this.props.onClose}>Close</button>
+                <button
+                  style={{
+                    backgroundColor: context.state.bgColor,
+                    color: context.state.color
+                  }}
+                  onClick={this.props.onClose}
+                >
+                  Close
+                </button>
               </div>
             </div>
           </div>

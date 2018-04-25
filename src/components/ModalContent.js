@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ThemeContext } from './List';
+import { ThemeContext } from './CardsList';
 
 export default class ModalContent extends Component {
   componentDidMount() {

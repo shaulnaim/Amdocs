@@ -1,5 +1,10 @@
 import React, { Component, StrictMode } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import * as contactsActions from '../actions/contactsActions';
 import Card from './Card';
 import Modal from './Modal';
 import ModalContent from './ModalContent';
@@ -14,8 +19,7 @@ class ThemeProvider extends React.Component {
   handleThemeToggle = () => {
     let color = this.state.color === 'white' ? 'slategrey' : 'white';
     let bgColor = color === 'white' ? 'slategrey' : '#c66b6b4d';
-    let modalBgColor = color === 'white' ? 'tellow' : 'pink';
-    this.setState({ color, bgColor, modalBgColor });
+    this.setState({ color, bgColor });
   };
 
   render() {
@@ -26,8 +30,7 @@ class ThemeProvider extends React.Component {
             className="toggle-theme"
             onClick={() => this.handleThemeToggle()}
           >
-            {' '}
-            Toggle theme{' '}
+            Toggle theme
           </button>
           <ThemeContext.Provider value={{ state: this.state }}>
             {this.props.children}
@@ -37,93 +40,47 @@ class ThemeProvider extends React.Component {
     );
   }
 }
-export class List extends Component {
-  constructor(props) {
-    super(props);
-    // console.log('conextAPI', ThemeContext);
-    this.state = {
-      isOpen: false,
-      list: props.source.people,
-      search: '',
-      selected: {
-        id: 2,
-        age: 24,
-        name: 'placeholder',
-        location: {
-          address: ' 25 Happy st',
-          city: 'Ashdod',
-          country: 'Israel'
-        },
-        representative: 'shir'
-      }
-    };
-  }
 
+class CardsList extends Component {
+  UNSAFE_componentWillMount() {
+    // HERE WE ARE TRIGGERING THE ACTION
+    this.props.contactsActions.getContacts();
+  }
   componentDidMount() {
     this.myRef.current.focus();
   }
 
   updateSearch = event => {
-    this.setState({
-      search: event.target.value.substr(0, 10)
-    });
+    this.props.contactsActions.dispatchSearch(event.target.value.substr(0, 10));
   };
 
   toggleModal = selectedObj => {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
+    this.props.contactsActions.dispatchToggleModal(!this.props.isOpen);
     if (selectedObj.name !== undefined) {
-      this.setState({
-        selected: selectedObj
-      });
+      this.props.contactsActions.dispatchUpdateSelected(selectedObj);
     }
   };
 
   handleChangeName = ev => {
-    const { list } = this.state;
-    const updated = Object.assign({}, this.state.selected, {
-      name: ev.target.value
-    });
-    const foundObject = list.find(obj => obj.id === updated.id);
-    Object.assign(foundObject, updated);
-    this.setState({ list: list }); // further value
+    this.props.contactsActions.dispatchEditName(ev.target.value);
   };
 
   handleChangeAge = ev => {
-    const { list } = this.state;
-    const updated = Object.assign({}, this.state.selected, {
-      age: ev.target.value
-    });
-    const foundObject = list.find(obj => obj.id === updated.id);
-    Object.assign(foundObject, updated);
-    this.setState({ list: list }); // further value
+    this.props.contactsActions.dispatchEditAge(ev.target.value);
   };
 
   handleChangeCity = ev => {
-    const { list } = this.state;
-    const updated = {
-      ...this.state.selected, //copy everything from state.selected
-      location: {
-        //override the location property
-        ...this.state.selected.location, //copy the everything from selected.location
-        city: ev.target.value //override selected.location.city
-      }
-    };
-    const foundObject = list.find(obj => obj.id === updated.id);
-    Object.assign(foundObject.location, updated.location);
-    this.setState({ list: list }); // further value
+    this.props.contactsActions.dispatchEditCity(ev.target.value);
   };
 
   myRef = React.createRef();
   render() {
-    const { isOpen } = this.state;
-    const { age, name } = this.state.selected;
-    const { city } = this.state.selected.location;
-    let filteredContacts = this.state.list.filter(contact => {
+    const { isOpen } = this.props;
+    const { age, name, city } = this.props;
+    let filteredContacts = this.props.contacts.filter(contact => {
       return contact.name
         .toLowerCase()
-        .includes(this.state.search.toLowerCase());
+        .includes(this.props.search.toLowerCase());
     });
     let isDisplay = filteredContacts.length < 1 ? 'block' : 'none';
     return (
@@ -143,7 +100,7 @@ export class List extends Component {
                     ref={this.myRef}
                     className="search-input"
                     type="text"
-                    defaultValue={this.state.search}
+                    defaultValue={this.props.search}
                     onChange={this.updateSearch}
                     placeholder="Search Pesrson"
                   />
@@ -169,13 +126,15 @@ export class List extends Component {
                     onClose={this.toggleModal}
                     onSave={this.saveCanges}
                   >
-                  <ModalContent age={age} 
-                                city={city}   
-                                name={name}
-                                onEnter={this.toggleModal}
-                                onChangeCity={this.handleChangeCity}
-                                onChangeAge={this.handleChangeAge}
-                                onChangeName={this.handleChangeName}/>
+                    <ModalContent
+                      age={age}
+                      city={city}
+                      name={name}
+                      onEnter={this.toggleModal}
+                      onChangeCity={this.handleChangeCity}
+                      onChangeAge={this.handleChangeAge}
+                      onChangeName={this.handleChangeName}
+                    />
                   </Modal>
                 </div>
               </React.Fragment>
@@ -186,3 +145,22 @@ export class List extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    contacts: state.contacts.contacts,
+    age: state.contacts.selected.age,
+    name: state.contacts.selected.name,
+    city: state.contacts.selected.location.city,
+    isOpen: state.contacts.isOpen,
+    search: state.contacts.search
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    contactsActions: bindActionCreators(contactsActions, dispatch)
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CardsList);

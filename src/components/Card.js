@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { ThemeContext } from './List';
+import { ThemeContext } from './CardsList';
 
 class Card extends Component {
-  constructor(props) {
-    super();
-  }
   render(props) {
     const { name, age, representative, avatar } = this.props.details;
     const { city, country } = this.props.details.location;
